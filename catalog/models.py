@@ -16,7 +16,7 @@ class Book(models.Model):
     isbn = models.CharField('ISBN', max_length = 13, unique = True, help_text = '10 or 13 digit Number')
 
     genre = models.ManyToManyField(Genre, help_text = 'Select genre of book')
-    language = models.ForeignKey(Language, on_delete = models.RESTRICT)
+    language = models.ForeignKey('Language', on_delete = models.SET_NULL, null = True)
 
     def __str__(self):
         return self.title
@@ -27,7 +27,7 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, help_text = "Unique ID of this particular book across library")
 
     due_back = models.DateField(null = True, blank = True)
-    book = models.ForeignKey(Book, on_delete = models.RESTRICT, null = True)
+    book = models.ForeignKey('Book', on_delete = models.RESTRICT, null = True)
     imprint = models.CharField(max_length = 20)
 
     LOAN_STATUS = (
@@ -50,8 +50,8 @@ class Author(models.Model):
     last_name = models.CharField(max_length = 100)
     date_of_birth = models.DateField(null = True, blank = True)
     date_of_death = models.DateField(null = True, blank = True)
-    books = models.OneToManyField(Book, on_delete = models.SET_NULL)
-    
+    #books = models.ForeignKey(Book, on_delete = models.SET_NULL)
+
     class Meta:
         ordering = ['last_name', 'first_name']
 
