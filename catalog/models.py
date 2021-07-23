@@ -16,6 +16,7 @@ class Book(models.Model):
     isbn = models.CharField('ISBN', max_length = 13, unique = True, help_text = '10 or 13 digit Number')
 
     genre = models.ManyToManyField(Genre, help_text = 'Select genre of book')
+    language = models.ForeignKey(Language, on_delete = models.RESTRICT)
 
     def __str__(self):
         return self.title
@@ -49,9 +50,17 @@ class Author(models.Model):
     last_name = models.CharField(max_length = 100)
     date_of_birth = models.DateField(null = True, blank = True)
     date_of_death = models.DateField(null = True, blank = True)
-
+    books = models.OneToManyField(Book, on_delete = models.SET_NULL)
+    
     class Meta:
         ordering = ['last_name', 'first_name']
 
     def __str__(self):
         return f'{self.first_name}, {self.last_name}'
+
+class Language(models.Model):
+    name = models.CharField(max_length = 20, help_text = "Enter language of book")
+
+    def __str__(self):
+        return self.name
+
