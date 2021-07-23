@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 import uuid
 
 # Create your models here.
@@ -20,6 +22,9 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('book-detail', args=[str(self.id)])
 
 class BookInstance(models.Model):
     #Universally unique identifiers are a good alternative to AutoField for primary_key. The database will not generate the UUID for you,
@@ -57,6 +62,10 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.first_name}, {self.last_name}'
+
+    def get_absolute_url(self):
+        """Returns the url to access a particular author instance."""
+        return reverse('author-detail', args=[str(self.id)])
 
 class Language(models.Model):
     name = models.CharField(max_length = 20, help_text = "Enter language of book")
