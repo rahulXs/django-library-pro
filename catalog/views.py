@@ -12,12 +12,18 @@ def index(request):
     num_authors = Author.objects.count()
     num_languages = Language.objects.count()
 
+    # For challenge
+    num_genres = Genre.objects.count()
+    num_books_contains_the = Book.objects.filter(title__icontains = 'the').count()
+  
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
         'num_languages': num_languages,
+        'num_genres' : num_genres,
+        'num_books_contains_the' : num_books_contains_the
     }
 
     return render(request, 'catalog/index.html', context = context)
