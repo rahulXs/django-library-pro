@@ -26,6 +26,11 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.id)])
 
+    def display_genre(self):
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = "Genre"
+
 class BookInstance(models.Model):
     #Universally unique identifiers are a good alternative to AutoField for primary_key. The database will not generate the UUID for you,
     #so it is recommended to use default"
