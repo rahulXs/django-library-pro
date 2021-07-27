@@ -9,7 +9,7 @@ p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
     line-height: 1.7em;
-    color: rgb(112, 110, 110);
+    color: rgb(26, 24, 24);
 }
 
 a,
@@ -42,7 +42,7 @@ a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    background: #7b93f3;
     color: #fff;
     transition: all 0.3s;
 }
