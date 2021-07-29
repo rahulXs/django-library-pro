@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block heading %}
-<span>Welcome User, Authors list!</span>
+<span>Welcome {% if user.is_authenticated %}{{ user.get_username }}
+  {% else %} User,
+  {% endif %}, Authors list!</span>
 {% endblock %}
 
 {% block content %}

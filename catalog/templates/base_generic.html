@@ -1,56 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   {% block title %}<title>Library+</title>{% endblock %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-   <!-- Add additional CSS in static file -->
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-<div class="wrapper">
-   <!-- Sidebar  -->
-   <nav id="sidebar">
-      <div class="sidebar-header">
-         <h4>ꜰᴜʟʟʏ ʙᴏᴏᴋ'ᴇᴅ! </h4>
-      </div>
-      {% block sidebar %}
-      <ul class="list-unstyled">
-         <li><a href="{% url 'index' %}">Home</a></li>
-         <li><a href="{% url 'books' %}">All books</a></li>
-         <li><a href="{% url 'authors' %}">All authors</a></li>
-      </ul>
-      {% endblock %}
-   </nav>
-   <!-- Page Content  -->
-   <div id="content">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-         <div class="container-fluid">
-          {% block heading %}<span>Welcome User!</span>{% endblock %}
-         </div>
-      </nav>
-      <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
-      <br><hr>
-      {% block pagination %}
-    {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
-                {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
-                {% if page_obj.has_next %}
-                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
-                {% endif %}
-            </span>
+  <head>
+    {% block title %}
+    <title>Library+</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Sidebar  -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h4>ꜰᴜʟʟʏ ʙᴏᴏᴋ'ᴇᴅ!</h4>
         </div>
-    {% endif %}
-  {% endblock %}
-   </div>
-</div>
-</body>
+        {% block sidebar %}
+        <ul class="list-unstyled">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'books' %}">All books</a></li>
+          <li><a href="{% url 'authors' %}">All authors</a></li>
+          <br />
+          <hr />
+          {% if user.is_authenticated %}
+          <li> User: {{ user.get_username }}</li>
+          <li><a href="{% url 'my-borrowed' %}">My Borrowed Books</a></li>
+          <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+          {% endif %}
+          <br>
+          {% if perms.catalog.can_mark_returned %}
+   <li><a href="{% url 'all-borrowed' %}">All borrowed</a></li>
+   {% endif %}
+
+          
+        </ul>
+        {% endblock %}
+      </nav>
+      <!-- Page Content  -->
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            {% block heading %}<span>Welcome User!</span>{% endblock %}
+          </div>
+        </nav>
+        <div class="col-sm-10">{% block content %}{% endblock %}</div>
+        <br />
+        <hr />
+        {% block pagination %} {% if is_paginated %}
+        <div class="pagination">
+          <span class="page-links">
+            {% if page_obj.has_previous %}
+            <a
+              href="{{ request.path }}?page={{ page_obj.previous_page_number }}"
+              >previous</a
+            >
+            {% endif %}
+            <span class="page-current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}"
+              >next</a
+            >
+            {% endif %}
+          </span>
+        </div>
+        {% endif %} {% endblock %}
+      </div>
+    </div>
+  </body>
 </html>

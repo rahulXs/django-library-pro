@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block heading %}
-<span>Welcome User to Home Page!</span>
+<span>Welcome {% if user.is_authenticated %}{{ user.get_username }}
+  {% else %} User,
+  {% endif %} to Home Page!</span>
 {% endblock %}
 
 {% block content %}
