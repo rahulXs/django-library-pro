@@ -1,27 +1,76 @@
-{% extends "base_generic.html" %}
-
-{% block title %}
+{% extends "base_generic.html" %} {% block title %}
 <title>Home Page</title>
-{% endblock %}
+{% endblock %} {% block heading %}
+<span
+  >Welcome {% if user.is_authenticated %}{{ user.get_username }} {% else %}
+  User, {% endif %} to Home Page of library <em>Fully Booked!</em></span>
+{% endblock %} {% block content %}
 
-{% block heading %}
-<span>Welcome {% if user.is_authenticated %}{{ user.get_username }}
-  {% else %} User,
-  {% endif %} to Home Page!</span>
-{% endblock %}
-
-{% block content %}
-  <p>Welcome to the Library,<em>Fully booked</em>!</p>
-  <h3>Dynamic content</h3>
-  <p>The library has the following record counts:</p>
-  <ul>
-    <li>Books: {{ num_books }}</li>
-    <li>Copies: {{ num_instances }}</li>
-    <li>Copies available: {{ num_instances_available }}</li>
-    <li>Authors: {{ num_authors }}</li>
-    <li>Languages: {{ num_languages }}</li>
-    <li>Genres: {{ num_genres }}</li>
-    <li>Books which contains 'the' (case-insensitive): {{ num_books_contains_the }}</li>
-  </ul>
-  <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Books</div>
+      <div class="card-body">
+        <h2>{{ num_books }}</h2>
+        <a href="{% url 'books' %}" class="card-link">See books list</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Copies</div>
+      <div class="card-body">
+        <h2>{{ num_instances }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Available copies</div>
+      <div class="card-body">
+        <h2>{{ num_instances_available }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Authors</div>
+      <div class="card-body">
+        <h2>{{ num_authors }}</h2>
+        <a href="{% url 'authors' %}" class="card-link">See authors list</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Languages</div>
+      <div class="card-body">
+        <h2>{{ num_languages }}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Genres</div>
+      <div class="card-body">
+        <h2>{{ num_genres }}</h2>
+      </div>
+    </div>
+  </div>
+  <em>Librarian view ( In- Progress)</em>
+  <div class="col-sm-4">
+    <div class="card text-center">
+      <div class="card-header">Books: {{ num_books }}</div>
+      <div class="card-body">
+        <a href="" class="card-link">Add book</a><br>
+        <a href="" class="card-link">Update book</a><br>
+        <a href="" class="card-link">Delete book</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<p>
+  You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.
+</p>
 {% endblock %}
