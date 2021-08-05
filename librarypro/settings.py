@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-@@6t5b^6&(gi)0
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'serene-escarpment-12271.herokuapp.com']
 
 
 # Application definition
